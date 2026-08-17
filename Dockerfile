@@ -10,7 +10,6 @@ WORKDIR /src
 COPY ["HjemIKroppenUmbraco.csproj", "Directory.Packages.props", "./"]
 RUN dotnet restore "HjemIKroppenUmbraco.csproj"
 COPY . .
-WORKDIR "/src/HjemIKroppenUmbraco"
 RUN dotnet build "HjemIKroppenUmbraco.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
@@ -39,7 +38,7 @@ RUN mkdir -p /https && \
     chmod 644 /https/aspnetcore.pfx
 
 # Copy entrypoint script
-COPY HjemIKroppenUmbraco/entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Make APP_UID available at runtime (inherits from .NET base image ARG)
