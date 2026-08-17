@@ -1,0 +1,38 @@
+services:
+  umbraco:
+    container_name: hjem-i-kroppen-umbraco
+    build:
+       context: .
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__umbracoDbDSN=Server=mssql,1433;Database=HjemIKroppenUmbracoDB;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=true;
+      - ConnectionStrings__umbracoDbDSN_ProviderName=Microsoft.Data.SqlClient
+      - DB_HOST=mssql
+      - DB_PORT=1433
+      - DB_WAIT_TIMEOUT=60
+    volumes:
+      - umbraco-media:/app/wwwroot/media
+      - umbraco-logs:/app/umbraco/Logs
+    networks:
+      - shared-net
+      - proxy-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/umbraco"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 90s
+    labels:
+      - "autoheal=true"
+
+networks:
+  shared-net:
+    external: true
+  proxy-net:
+    external: true
+
+volumes:
+  umbraco-media:
+  umbraco-logs:
