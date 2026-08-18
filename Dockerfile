@@ -22,7 +22,7 @@ COPY --from=publish /app/publish .
 
 # Install gosu for dropping privileges and openssl for certificate generation
 USER root
-RUN apt-get update && apt-get install -y --no-install-recommends gosu openssl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends gosu openssl curl && rm -rf /var/lib/apt/lists/*
 
 # Generate self-signed certificate for HTTPS
 RUN mkdir -p /https && \
