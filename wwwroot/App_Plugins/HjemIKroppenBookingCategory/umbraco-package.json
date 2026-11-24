@@ -1,0 +1,30 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "HjemIKroppen.BookingCategory",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "propertyEditorUi",
+      "alias": "HjemIKroppen.PropertyEditorUi.BookingCategory",
+      "name": "Bookingkategori",
+      "element": "/App_Plugins/HjemIKroppenBookingCategory/booking-category-picker.js",
+      "elementName": "hjem-i-kroppen-booking-category-picker",
+      "meta": {
+        "label": "Bookingkategori",
+        "icon": "icon-tag",
+        "group": "pickers",
+        "propertyEditorSchemaAlias": "Umbraco.Plain.String",
+        "settings": {
+          "properties": [
+            {
+              "alias": "apiUrl",
+              "label": "Booking-API-adresse",
+              "description": "Adressen på booking-API'et uden skråstreg til sidst, fx https://api.hjemikroppen.dk",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
