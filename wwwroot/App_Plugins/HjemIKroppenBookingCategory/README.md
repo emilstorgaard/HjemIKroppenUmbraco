@@ -1,7 +1,7 @@
-# Bookingkategori – Umbraco-opsætning
+# Bookingkategori og Bookingydelse – Umbraco-opsætning
 
-Dropdown til Umbraco 17, hvor redaktøren vælger en af booking-API'ets kategorier. Den gemmer kategoriens **id**
-(ikke navnet), så valget holder, selv om kategorien omdøbes.
+To dropdowns til Umbraco 17, der henter fra booking-API'et: **Bookingkategori** (kategorier) og **Bookingydelse**
+(aktive ydelser, vist som "Kategori – Ydelse"). De gemmer **id**, ikke navnet, så valget holder ved omdøbning.
 
 ## 1. Installér pluginet
 
@@ -13,14 +13,14 @@ Booking-API'et skal tillade Umbracos adresse i CORS:
 - Lokalt: `"https://localhost:44304"` står i booking-API'ets `appsettings.Development.json`.
 - Docker: sæt `UMBRACO_ORIGIN` i `.env` (bliver til `AllowedOrigins__1`).
 
-## 2. Datatype
+## 2. Datatyper
 
-**Indstillinger → Datatyper → Opret**
+**Indstillinger → Datatyper → Opret** – opret begge, med samme API-adresse:
 
 | Felt | Værdi |
 |---|---|
-| Navn | Bookingkategori |
-| Property editor | Bookingkategori (gruppen *Pickers*) |
+| Navn | Bookingkategori / Bookingydelse |
+| Property editor | Bookingkategori / Bookingydelse (gruppen *Pickers*) |
 | Booking-API-adresse | Lokalt `https://localhost:7079` (https, da backoffice kører på https). I drift booking-API'ets offentlige adresse. Uden `/` til sidst |
 
 ## 3. Element types (til Block Lists)
@@ -30,15 +30,17 @@ Booking-API'et skal tillade Umbracos adresse i CORS:
 | Navn | Alias | Editor |
 |---|---|---|
 | Citat | `quote` | Textarea |
-| Navn | `name` | Textstring |
+| Navn | `author` | Textstring (`name` er reserveret i Umbraco) |
 | Stjerner | `rating` | Numeric (1–5) |
 
 **Bookingmulighed** (alias `bookingOption`, *Is an element type*)
 
 | Navn | Alias | Editor |
 |---|---|---|
-| Titel | `title` | Textstring |
-| Forløbs-id (valgfri) | `seriesId` | Textstring |
+| Titel (valgfri, tom = ydelsens navn) | `title` | Textstring |
+| Ydelse | `serviceType` | Datatypen *Bookingydelse* |
+
+Book-knappen linker til `/book?kategori=<ydelsens kategori>&ydelse=<id>`.
 
 ## 4. Dokumenttype "Terapiside"
 
@@ -49,8 +51,8 @@ Brug samme SEO-composition som forsiden (`metaTitle`, `metaDescription`, `ogImag
 |---|---|---|
 | Titel | `heading` | Textstring |
 | Beskrivelse | `info` | Textarea |
-| Billede | `image` | Media Picker (ét billede) |
-| Kortbillede | `cardImage` | Media Picker (ét billede, valgfrit). Bruges på forsidens kort; tomt = sidens billede |
+| Billede | `image` | Image Media Picker (ét billede – *Pick multiple items* slået fra) |
+| Kortbillede | `cardImage` | Image Media Picker (ét billede, valgfrit). Bruges på forsidens kort; tomt = sidens billede |
 | Målgruppe | `audience` | Textstring (fx "1:1" eller "Hold") |
 | Deltagere | `participants` | Textstring (fx "4 personer pr. hold") |
 | Anmeldelser | `testimonials` | Block List med *Anmeldelse* |
