@@ -51,8 +51,7 @@ Brug samme SEO-composition som forsiden (`metaTitle`, `metaDescription`, `ogImag
 |---|---|---|
 | Titel | `heading` | Textstring |
 | Beskrivelse | `info` | Textarea |
-| Billede | `image` | Image Media Picker (ét billede – *Pick multiple items* slået fra) |
-| Kortbillede | `cardImage` | Image Media Picker (ét billede, valgfrit). Bruges på forsidens kort; tomt = sidens billede |
+| Billede | `image` | Image Media Picker (ét billede – *Pick multiple items* slået fra). Bruges både på siden og på forsidens kort |
 | Målgruppe | `audience` | Textstring (fx "1:1" eller "Hold") |
 | Deltagere | `participants` | Textstring (fx "4 personer pr. hold") |
 | Anmeldelser | `testimonials` | Block List med *Anmeldelse* |
